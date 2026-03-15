@@ -1,18 +1,47 @@
 ---
 layout: default
+title: "Bienvenido a mi Blog"
 ---
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+<!-- Menú de navegación -->
+<nav>
+  <ul>
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/about">Sobre mí</a></li>
+    <li><a href="/contact">Contacto</a></li>
+  </ul>
+</nav>
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+<!-- Título de la página -->
+<header>
+  <h1>{{ page.title }}</h1>
+  <p>¡Bienvenidos a mi blog! Aquí compartiré mis experiencias, pensamientos y más.</p>
+</header>
 
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
+<!-- Sección de publicaciones más recientes -->
+<section>
+  <h2>Últimas Publicaciones</h2>
+  <ul>
+    {% for post in site.posts limit:5 %}
+      <li>
+        <article>
+          <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+          <p><strong>{{ post.date | date: "%B %d, %Y" }}</strong></p>
+          <p>{{ post.excerpt }}</p>
+        </article>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
+<!-- Sección de pie de página -->
+<footer>
+  <p>© {{ site.time | date: "%Y" }} Mi Blog - Todos los derechos reservados</p>
+</footer>
+
+<!-- Enlaces a redes sociales (si tienes) -->
+<div class="social-links">
+  <a href="https://twitter.com/tuusuario" target="_blank">Twitter</a>
+  <a href="https://github.com/tuusuario" target="_blank">GitHub</a>
+  <a href="https://linkedin.com/in/tuusuario" target="_blank">LinkedIn</a>
 </div>
