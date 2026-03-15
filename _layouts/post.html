@@ -3,15 +3,48 @@ layout: default
 ---
 
 <article class="post">
-  <h1>{{ page.title }}</h1>
+  <!-- Título del post -->
+  <header>
+    <h1>{{ page.title }}</h1>
+    <p class="post-meta">
+      Publicado el <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      {% if page.categories %}
+        en <span class="categories">{{ page.categories | join: ", " }}</span>
+      {% endif %}
+    </p>
+  </header>
 
-  <div class="entry">
+  <!-- Contenido del post -->
+  <section class="post-content">
     {{ content }}
-  </div>
+  </section>
 
-  <div class="date">
-    Written on {{ page.date | date: "%B %e, %Y" }}
-  </div>
+  <!-- Botones de compartir en redes sociales -->
+  <section class="social-sharing">
+    <p>Comparte este post:</p>
+    <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ page.url | absolute_url }}" target="_blank">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank">Facebook</a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | absolute_url }}&title={{ page.title | url_encode }}" target="_blank">LinkedIn</a>
+  </section>
 
-  {% include disqus.html %}
+  <!-- Comentarios (opcional) -->
+  {% if site.disqus.shortname %}
+    <section class="comments">
+      <h2>Comentarios</h2>
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = "{{ page.url | absolute_url }}";  
+          this.page.identifier = "{{ page.id }}"; 
+        };
+        (function() { 
+          var d = document, s = d.createElement('script');
+          s.src = 'https://{{ site.disqus.shortname }}.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    </section>
+  {% endif %}
+
 </article>
